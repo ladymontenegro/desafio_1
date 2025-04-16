@@ -42,7 +42,7 @@ bool exportImage(unsigned char* pixelData, int width,int height, QString archivo
 unsigned int* loadSeedMasking(const char* nombreArchivo, int &seed, int &n_pixels);
 //
 unsigned char *desplazamientoDerecha(unsigned char *array, //Por que es asi? Y no con &
-                                     unsigned char *arrayCopia,
+                                    unsigned char *arrayCopia,
                                      unsigned char numDesplazamiento,
                                      int semilla,
                                      int bytesMascara);
@@ -337,4 +337,22 @@ unsigned char *xorEntreImagenes(unsigned char *arrayImagen,
         *(arrayImagen + i) = *(arrayImagen + i) ^ *(arrayImagenI_M + i);
     }
     return arrayImagen;
+}
+
+bool comparar(const char *nombreArchivo,
+              int &semilla,
+              int &nPixeles,
+              unsigned char *arrayTransformado,
+              unsigned char *arrayMascara)
+{
+    unsigned int *arrayTexto = loadSeedMasking(nombreArchivo, semilla, nPixeles);
+
+    for (int i = 0; semilla <= nPixeles; semilla++, i++){
+        if( (*(arrayTransformado+semilla))-(*(arrayMascara+i)) != (*(arrayTexto+i)) ){
+            return false;
+            }
+
+    delete[] arrayTexto;
+    arrayTexto = nullptr;
+    return true;
 }
