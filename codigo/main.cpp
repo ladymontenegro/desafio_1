@@ -40,6 +40,34 @@ using namespace std;
 unsigned char* loadPixels(QString input, int &width, int &height);
 bool exportImage(unsigned char* pixelData, int width,int height, QString archivoSalida);
 unsigned int* loadSeedMasking(const char* nombreArchivo, int &seed, int &n_pixels);
+//
+unsigned char *desplazamientoDerecha(unsigned char *array, //Por que es asi? Y no con &
+                                     unsigned char *arrayCopia,
+                                     unsigned char numDesplazamiento,
+                                     int semilla,
+                                     int bytesMascara);
+
+unsigned char *desplazamientoIzquierda(unsigned char *array, //Por que es asi? Y no con &
+                                       unsigned char *arrayCopia,
+                                       unsigned char numDesplazamiento,
+                                       int semilla,
+                                       int bytesMascara);
+
+unsigned char *rotacionDerecha(unsigned char *array,
+                               unsigned char *arrayCopia,
+                               unsigned char numRotacion,
+                               int semilla,
+                               int bytesMascara);
+
+unsigned char *rotacionIzquierda(unsigned char *array,
+                                 unsigned char *arrayCopia,
+                                 unsigned char numRotacion,
+                                 int semilla,
+                                 int bytesMascara);
+
+unsigned char *xorEntreImagenes(unsigned char *arrayImagen,
+                                unsigned char *arrayImagenI_M,
+                                int bytesImagenes);
 
 int main()
 {
@@ -56,15 +84,14 @@ int main()
     unsigned char *pixelData = loadPixels(archivoEntrada, width, height);
 
     cout << "Ancho: " << width << ", Alto: " << height << endl;
-    cout << "Direccion del arreglo de pixeles: " << static_cast<void*>(pixelData) << endl;
+    cout << "Direccion del arreglo de pixeles: " << static_cast<void *>(pixelData) << endl;
 
     // Imprimir los primeros 10 píxeles (R, G, B) como ejemplo
     cout << "Primeros 10 pixeles (R, G, B):" << endl;
     for (int i = 0; i < 10 * 3; i += 3) {
-        cout << "Pixel " << i / 3 << ": "
-             << static_cast<int>(pixelData[i]) << " "    // R
-             << static_cast<int>(pixelData[i + 1]) << " " // G
-             << static_cast<int>(pixelData[i + 2]) << endl; // B
+        cout << "Pixel " << i / 3 << ": " << static_cast<int>(pixelData[i]) << " " // R
+             << static_cast<int>(pixelData[i + 1]) << " "                          // G
+             << static_cast<int>(pixelData[i + 2]) << endl;                        // B
     }
 
     // Libera la memoria usada para los píxeles
@@ -244,4 +271,70 @@ unsigned int* loadSeedMasking(const char* nombreArchivo, int &seed, int &n_pixel
 
     // Retornar el puntero al arreglo con los datos RGB
     return RGB;
+}
+
+unsigned char *desplazamientoDerecha(unsigned char *array, //Por que es asi? Y no con &
+                                     unsigned char *arrayCopia,
+                                     unsigned char numDesplazamiento,
+                                     int semilla,
+                                     int bytesMascara)
+{
+    for (; semilla <= bytesMascara; semilla++) {
+        *(arrayCopia + semilla) = *(array + semilla) >> numDesplazamiento;
+    }
+    return arrayCopia;
+}
+
+unsigned char *desplazamientoIzquierda(unsigned char *array, //Por que es asi? Y no con &
+                                       unsigned char *arrayCopia,
+                                       unsigned char numDesplazamiento,
+                                       int semilla,
+                                       int bytesMascara)
+{
+    for (; semilla <= bytesMascara; semilla++) {
+        *(arrayCopia + semilla) = *(array + semilla) << numDesplazamiento;
+    }
+    return arrayCopia;
+}
+
+unsigned char *rotacionDerecha(unsigned char *array,
+                               unsigned char *arrayCopia,
+                               unsigned char numRotacion,
+                               int semilla,
+                               int bytesMascara)
+{
+    for (; semilla <= bytesMascara; semilla++) {
+        unsigned char byte = *(array + semilla);
+        unsigned char bitsDerecha = byte >> numRotacion;
+        unsigned char bitsMovidoAIzquierda = byte << (8 - numRotacion);
+        *(arrayCopia + semilla) = bitsDerecha | bitsMovidoAIzquierda;
+    }
+
+    return arrayCopia;
+}
+
+unsigned char *rotacionIzquierda(unsigned char *array,
+                                 unsigned char *arrayCopia,
+                                 unsigned char numRotacion,
+                                 int semilla,
+                                 int bytesMascara)
+{
+    for (; semilla <= bytesMascara; semilla++) {
+        unsigned char byte = *(array + semilla);
+        unsigned char bitsIzquierda = byte << numRotacion;
+        unsigned char bitsMovidoADerecha = byte >> (8 - numRotacion);
+        *(arrayCopia + semilla) = bitsIzquierda | bitsMovidoADerecha;
+    }
+
+    return arrayCopia;
+}
+
+unsigned char *xorEntreImagenes(unsigned char *arrayImagen,
+                                unsigned char *arrayImagenI_M,
+                                int bytesImagenes)
+{
+    for (int i = 0; i < bytesImagenes; i++) {
+        *(arrayImagen + i) = *(arrayImagen + i) ^ *(arrayImagenI_M + i);
+    }
+    return arrayImagen;
 }
