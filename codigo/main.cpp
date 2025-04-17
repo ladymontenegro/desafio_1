@@ -71,32 +71,101 @@ unsigned char *xorEntreImagenes(unsigned char *arrayImagen,
 
 int main()
 {
-    // Definición de rutas de archivo de entrada (imagen original) y salida (imagen modificada)
-    QString archivoEntrada = "C:/Users/DELL/Documents/universidad/segundo_semestre/informatica_II/prueba_desafio/Caso 1/M.bmp";
-    //QString archivoSalida = "";
+    //Definicion de variables
+    const char* nombreArchivo = NULL;
+    int semilla;
+    int numBytesMascara;
+    int numBytesImagenes;
+    unsigned char* arrayCopia;
+    unsigned char* arrayPosibleTransformacion;
+    unsigned char* arrayImagen;
+    bool resultadoComparacion;
+    bool tranformacionHallada = false;
 
-    // Variables para almacenar las dimensiones de la imagen
-    int height = 0;
-    int width = 0;
+    while (tranformacionHallada){
+        //Cargar informacion de la mascara
+        QString rutaMascara = "C:/Users/DELL/Documents/universidad/segundo_semestre/informatica_II/prueba_desafio/Caso 1/M.bmp";
+        int widthMascara = 0;
+        int heightMascara = 0;
+        unsigned char* arrayMascaraPixels = loadPixels(rutaMascara, widthMascara, heightMascara);
 
+        //Cargar informacion de I_D
+        QString rutaI_D = "C:/Users/DELL/Documents/universidad/segundo_semestre/informatica_II/prueba_desafio/Caso 1/I_D.bmp";
+        int widthI_D = 0;
+        int heightI_D = 0;
+        unsigned char* arrayI_DPixels = loadPixels(rutaI_D, widthI_D, heightI_D);
 
-    // Carga la imagen BMP en memoria dinámica y obtiene ancho y alto
-    unsigned char *pixelData = loadPixels(archivoEntrada, width, height);
+        //Cargar informacion de I_M
+        QString rutaI_M = "C:/Users/DELL/Documents/universidad/segundo_semestre/informatica_II/prueba_desafio/Caso 1/I_M.bmp";
+        int widthI_M = 0;
+        int heightI_M = 0;
+        unsigned char* arrayI_MPixels = loadPixels(rutaI_M, widthI_M, heightI_M);
 
-    cout << "Ancho: " << width << ", Alto: " << height << endl;
-    cout << "Direccion del arreglo de pixeles: " << static_cast<void *>(pixelData) << endl;
+        //Seleccionar archivo de texto
+        cout << "Ingresar nombre del archivo: ";
+        cin >> nombreArchivo;
 
-    // Imprimir los primeros 10 píxeles (R, G, B) como ejemplo
-    cout << "Primeros 10 pixeles (R, G, B):" << endl;
-    for (int i = 0; i < 10 * 3; i += 3) {
-        cout << "Pixel " << i / 3 << ": " << static_cast<int>(pixelData[i]) << " " // R
-             << static_cast<int>(pixelData[i + 1]) << " "                          // G
-             << static_cast<int>(pixelData[i + 2]) << endl;                        // B
+        unsigned int* arrayTexto = loadSeedMasking(nombreArchivo, semilla, numPixels);
+
+        //Proceso de prueba de posibles transformaciones
+
+        //Desplazamientos
+        for (int i = 1; i < 8; i++){
+            //Primera posible trasnformacion: Desplazamiento a la derecha
+            arrayPosibleTransformacion = desplazamientoDerecha(arrayI_DPixels, arrayCopia, i, semilla, numBytesMascara);
+            resultadoComparacion = comparar(arrayTexto, semilla, numBytesMascara, arrayPosibleTransformacion, arrayMascaraPixels);
+            if (resultadoComparacion){
+                cout << "La transformacion desplazamiento a la derecha de "<< i << "pixeles es correcta";
+                break;
+            }
+
+            //Segunda posible transformacion: Desplazamiento a las izquierda
+            arrayPosibleTransformacion = desplazamientoIzquierda(arrayI_DPixels, arrayCopia, i, semilla, numBytesMascara);
+            resultadoComparacion = comparar(arrayTexto, semilla, numBytesMascara, arrayPosibleTransformacion, arrayMascaraPixels);
+            if (resultadoComparacion){
+                cout << "La transformacion desplazamiento a la izquierda de "<< i << "pixeles es correcta";
+                break;
+            }
+        }
+
+        //Rotaciones
+        for (int i = 1; i <= 8; i++){
+            //Primera posible trasnformacion: Rotacion a la derecha
+            arrayPosibleTransformacion = rotacionDerecha(arrayI_DPixels, arrayCopia, i, semilla, numBytesMascara);
+            resultadoComparacion = comparar(arrayTexto, semilla, numBytesMascara, arrayPosibleTransformacion, arrayMascaraPixels);
+            if (resultadoComparacion){
+                cout << "La transformacion rotacion a la derecha de "<< i << "pixeles es correcta";
+                break;
+            }
+
+            //Segunda posible transformacion: Rotacion a las izquierda
+            arrayPosibleTransformacion = rotacionIzquierda(arrayI_DPixels, arrayCopia, i, semilla, numBytesMascara);
+            resultadoComparacion = comparar(arrayTexto, semilla, numBytesMascara, arrayPosibleTransformacion, arrayMascaraPixels);
+            if (resultadoComparacion){
+                cout << "La transformacion rotacion a la izquierda de "<< i << "pixeles es correcta";
+                break;
+            }
+        }
+
+        //XOR entre imagenes
+        arrayImagen = xorEntreImagenes(arrayImagen, arrayI_MPixels, numBytesImagenes);
+
+        if(resultadoComparacion){
+            tranformacionHallada = true
+        }
     }
 
-    // Libera la memoria usada para los píxeles
-    delete[] pixelData;
-    pixelData = nullptr;
+    delete[] arrayI_MPixels;
+    arrayI_MPixels = nullptr;
+
+    delete[] arrayTexto;
+    arrayTexto = nullptr;
+
+    delete[] arrayMascaraPixels;
+    arrayMascaraPixels = nullptr;
+
+    delete[] arrayI_DPixels;
+    arrayI_DPixels = nullptr;
 
     return 0; // Fin del programa
 }
