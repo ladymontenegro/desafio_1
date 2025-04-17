@@ -339,20 +339,15 @@ unsigned char *xorEntreImagenes(unsigned char *arrayImagen,
     return arrayImagen;
 }
 
-bool comparar(const char *nombreArchivo,
+bool comparar(unsigned int* arrayTexto,
               int &semilla,
-              int &nPixeles,
+              int &nBytes,
               unsigned char *arrayTransformado,
               unsigned char *arrayMascara)
 {
-    unsigned int *arrayTexto = loadSeedMasking(nombreArchivo, semilla, nPixeles);
-
-    for (int i = 0; semilla <= nPixeles; semilla++, i++){
+    for (int i = 0; semilla <= nBytes; semilla++, i++){
         if( (*(arrayTransformado+semilla))-(*(arrayMascara+i)) != (*(arrayTexto+i)) ){
             return false;
             }
-
-    delete[] arrayTexto;
-    arrayTexto = nullptr;
     return true;
 }
