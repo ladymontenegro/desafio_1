@@ -86,6 +86,10 @@ int main()
         const char* punteroArchivo = nombreArchivo.c_str(); //.c_str es para convertir el string a const char
         unsigned int* arrayTexto = loadSeedMasking(punteroArchivo, semilla, numPixels);
 
+        numBytesMascara = numPixels * 3;
+
+        unsigned char* arrayCopia = crearArrayCopia(arrayI_DPixels, semilla, numBytesMascara);
+
         while (not tranformacionHallada){
 
             //Proceso de prueba de posibles transformaciones
@@ -138,6 +142,9 @@ int main()
 
         delete[] arrayTexto;
         arrayTexto = nullptr;
+
+        delete[] arrayCopia;
+        arrayCopia = nullptr;
     }
 
     delete[] arrayI_MPixels;

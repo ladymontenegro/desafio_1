@@ -5,6 +5,15 @@
 
 using namespace std;
 
+unsigned char* crearArrayCopia(unsigned char* arrayOriginal, int semilla, int numBytesMascara){
+    unsigned char* arrayCopia = new unsigned char[numBytesMascara];
+
+    for (int i = 0; i < numBytesMascara; semilla ++, i ++){
+        (*(arrayCopia + i)) = (*(arrayOriginal + semilla));
+    }
+    return arrayCopia;
+}
+
 unsigned char* loadPixels(QString input, int &width, int &height){
     /*
  * @brief Carga una imagen BMP desde un archivo y extrae los datos de píxeles en formato RGB.

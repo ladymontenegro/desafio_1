@@ -3,6 +3,8 @@
 
 #include <QCoreApplication>
 
+unsigned char* crearArrayCopia(unsigned char*arrayOriginal, int semilla, int numBytesMascara);
+
 unsigned char* loadPixels(QString input, int &width, int &height);
 
 bool exportImage(unsigned char* pixelData, int width,int height, QString archivoSalida);
