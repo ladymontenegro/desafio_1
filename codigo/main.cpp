@@ -151,7 +151,7 @@ int main()
         arrayImagen = xorEntreImagenes(arrayImagen, arrayI_MPixels, numBytesImagenes);
 
         if(resultadoComparacion){
-            tranformacionHallada = true
+            tranformacionHallada = true;
         }
     }
 
@@ -418,5 +418,6 @@ bool comparar(unsigned int* arrayTexto,
         if( (*(arrayTransformado+semilla))-(*(arrayMascara+i)) != (*(arrayTexto+i)) ){
             return false;
             }
+    }
     return true;
 }
