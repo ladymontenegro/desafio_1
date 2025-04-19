@@ -49,10 +49,9 @@ int main()
     int numBytesMascara = 0;
     int numBytesImagenes = 0;
     int numArchivos = 0;
-    unsigned char* arrayCopia = nullptr;
-    unsigned char* arrayPosibleTransformacion = nullptr;
-    unsigned char* arrayImagen = nullptr;
-    unsigned int* arrayTexto = nullptr;
+    unsigned char *arrayCopia = nullptr;
+    unsigned char *arrayPosibleTransformacion = nullptr;
+    unsigned int *arrayTexto = nullptr;
     bool resultadoComparacion;
     bool tranformacionHallada = false;
 
@@ -60,64 +59,68 @@ int main()
     QString rutaMascara = "C:/Users/steve/OneDrive/Escritorio/DESAFIO_01/DesafioI/Caso1/M.bmp";
     int widthMascara = 0;
     int heightMascara = 0;
-    unsigned char* arrayMascaraPixels = loadPixels(rutaMascara, widthMascara, heightMascara);
+    unsigned char *arrayMascaraPixels = loadPixels(rutaMascara, widthMascara, heightMascara);
 
     //Cargar informacion de I_D
     QString rutaI_D = "C:/Users/steve/OneDrive/Escritorio/DESAFIO_01/DesafioI/Caso1/I_D.bmp";
     int widthI_D = 0;
     int heightI_D = 0;
-    unsigned char* arrayI_DPixels = loadPixels(rutaI_D, widthI_D, heightI_D);
+    unsigned char *arrayImagen = loadPixels(rutaI_D, widthI_D, heightI_D);
 
     //Cargar informacion de I_M
     QString rutaI_M = "C:/Users/steve/OneDrive/Escritorio/DESAFIO_01/DesafioI/Caso1/I_M.bmp";
     int widthI_M = 0;
     int heightI_M = 0;
-    unsigned char* arrayI_MPixels = loadPixels(rutaI_M, widthI_M, heightI_M);
+    unsigned char *arrayI_MPixels = loadPixels(rutaI_M, widthI_M, heightI_M);
 
     cout << "Ingrese el numero de archivos de texto a comparar: " << endl;
     cin >> numArchivos;
 
-    for(int i = 1; i <= numArchivos; i++){
-
+    for (int i = 1; i <= numArchivos; i++) {
         //Seleccionar archivo de texto
         cout << "Ingrese la ruta del archivo: " << endl;
         cin >> nombreArchivo;
 
         const char *punteroArchivo = nombreArchivo
                                          .c_str(); //.c_str es para convertir el string a const char
-        unsigned int* arrayTexto = loadSeedMasking(punteroArchivo, semilla, numPixels);
+        unsigned int *arrayTexto = loadSeedMasking(punteroArchivo, semilla, numPixels);
 
         numBytesMascara = numPixels * 3;
 
-        unsigned char* arrayCopia = crearArrayCopia(arrayI_DPixels, semilla, numBytesMascara);
+        unsigned char *arrayCopia = crearArrayCopia(arrayImagen, semilla, numBytesMascara);
 
-        while (not tranformacionHallada){
-
+        while (not tranformacionHallada) {
             //Proceso de prueba de posibles transformaciones
 
             //Desplazamientos
-            for (int i = 1; i <= 8; i++){
+            for (int i = 1; i <= 8; i++) {
                 //Primera posible trasnformacion: Desplazamiento a la derecha
-                arrayPosibleTransformacion = desplazamientoDerecha(arrayI_DPixels,
+                arrayPosibleTransformacion = desplazamientoDerecha(arrayImagen,
                                                                    semilla,
                                                                    arrayCopia,
                                                                    numBytesMascara,
                                                                    i);
-                resultadoComparacion = comparar(arrayTexto, numBytesMascara, arrayPosibleTransformacion, arrayMascaraPixels);
-                if (resultadoComparacion){
+                resultadoComparacion = comparar(arrayTexto,
+                                                numBytesMascara,
+                                                arrayPosibleTransformacion,
+                                                arrayMascaraPixels);
+                if (resultadoComparacion) {
                     cout << "La transformacion desplazamiento a la derecha de " << i
                          << " pixeles es correcta" << endl;
                     break;
                 }
 
                 //Segunda posible transformacion: Desplazamiento a las izquierda
-                arrayPosibleTransformacion = desplazamientoIzquierda(arrayI_DPixels,
+                arrayPosibleTransformacion = desplazamientoIzquierda(arrayImagen,
                                                                      semilla,
                                                                      arrayCopia,
                                                                      numBytesMascara,
                                                                      i);
-                resultadoComparacion = comparar(arrayTexto, numBytesMascara, arrayPosibleTransformacion, arrayMascaraPixels);
-                if (resultadoComparacion){
+                resultadoComparacion = comparar(arrayTexto,
+                                                numBytesMascara,
+                                                arrayPosibleTransformacion,
+                                                arrayMascaraPixels);
+                if (resultadoComparacion) {
                     cout << "La transformacion desplazamiento a la izquierda de " << i
                          << "pixeles es correcta" << endl;
                     break;
@@ -125,28 +128,36 @@ int main()
             }
 
             //Rotaciones
-            for (int i = 1; i < 8; i++){
+            for (int i = 1; i < 8; i++) {
                 //Primera posible trasnformacion: Rotacion a la derecha
-                arrayPosibleTransformacion = rotacionDerecha(arrayI_DPixels,
+                arrayPosibleTransformacion = rotacionDerecha(arrayImagen,
                                                              semilla,
                                                              arrayCopia,
                                                              numBytesMascara,
                                                              i);
-                resultadoComparacion = comparar(arrayTexto, numBytesMascara, arrayPosibleTransformacion, arrayMascaraPixels);
-                if (resultadoComparacion){
-                    cout << "La transformacion rotacion a la derecha de "<< i << "pixeles es correcta";
+                resultadoComparacion = comparar(arrayTexto,
+                                                numBytesMascara,
+                                                arrayPosibleTransformacion,
+                                                arrayMascaraPixels);
+                if (resultadoComparacion) {
+                    cout << "La transformacion rotacion a la derecha de " << i
+                         << "pixeles es correcta";
                     break;
                 }
 
                 //Segunda posible transformacion: Rotacion a las izquierda
-                arrayPosibleTransformacion = rotacionIzquierda(arrayI_DPixels,
+                arrayPosibleTransformacion = rotacionIzquierda(arrayImagen,
                                                                semilla,
                                                                arrayCopia,
                                                                numBytesMascara,
                                                                i);
-                resultadoComparacion = comparar(arrayTexto, numBytesMascara, arrayPosibleTransformacion, arrayMascaraPixels);
-                if (resultadoComparacion){
-                    cout << "La transformacion rotacion a la izquierda de "<< i << "pixeles es correcta";
+                resultadoComparacion = comparar(arrayTexto,
+                                                numBytesMascara,
+                                                arrayPosibleTransformacion,
+                                                arrayMascaraPixels);
+                if (resultadoComparacion) {
+                    cout << "La transformacion rotacion a la izquierda de " << i
+                         << "pixeles es correcta";
                     break;
                 }
             }
@@ -154,7 +165,7 @@ int main()
             //XOR entre imagenes
             arrayImagen = xorEntreImagenes(arrayImagen, arrayI_MPixels, numBytesImagenes);
 
-            if(resultadoComparacion){
+            if (resultadoComparacion) {
                 tranformacionHallada = true;
             }
         }
@@ -172,8 +183,8 @@ int main()
     delete[] arrayMascaraPixels;
     arrayMascaraPixels = nullptr;
 
-    delete[] arrayI_DPixels;
-    arrayI_DPixels = nullptr;
+    delete[] arrayImagen;
+    arrayImagen = nullptr;
 
     return 0; // Fin del programa
 }

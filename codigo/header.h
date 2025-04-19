@@ -23,4 +23,20 @@ unsigned char *xorEntreImagenes(unsigned char *arrayImagen, unsigned char *array
 
 bool comparar(unsigned int* arrayTexto, int nBytes, unsigned char *arrayTransformado, unsigned char *arrayMascara);
 
+unsigned char *desplazamientoDerechaImagen(unsigned char *arrayImagen,
+                                           int numBytesImagen,
+                                           unsigned char numDesplazamiento);
+
+unsigned char *desplazamientoIzquierdaImagen(unsigned char *arrayImagen,
+                                             int numBytesImagen,
+                                             unsigned char numDesplazamiento);
+
+unsigned char *rotacionDerechaImagen(unsigned char *arrayImagen,
+                                     int numBytesImagen,
+                                     unsigned char numRotacion);
+
+unsigned char *rotacionIzquierdaImagen(unsigned char *arrayImagen,
+                                       int numBytesImagen,
+                                       unsigned char numRotacion);
+
 #endif // HEADER_H

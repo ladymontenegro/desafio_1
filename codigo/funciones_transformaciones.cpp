@@ -53,3 +53,51 @@ bool comparar(unsigned int* arrayTexto, int nBytes, unsigned char *arrayTransfor
     }
     return true;
 }
+
+unsigned char *desplazamientoDerechaImagen(unsigned char *arrayImagen,
+                                           int numBytesImagen,
+                                           unsigned char numDesplazamiento)
+{
+    for (int i = 0; i < numBytesImagen; i++) {
+        *(arrayImagen + i) = *(arrayImagen + i) >> numDesplazamiento;
+    }
+    return arrayImagen;
+}
+
+unsigned char *desplazamientoIzquierdaImagen(unsigned char *arrayImagen,
+                                             int numBytesImagen,
+                                             unsigned char numDesplazamiento)
+{
+    for (int i = 0; i < numBytesImagen; i++) {
+        *(arrayImagen + i) = *(arrayImagen + i) << numDesplazamiento;
+    }
+    return arrayImagen;
+}
+
+unsigned char *rotacionDerechaImagen(unsigned char *arrayImagen,
+                                     int numBytesImagen,
+                                     unsigned char numRotacion)
+{
+    for (int i = 0; i < numBytesImagen; i++) {
+        unsigned char byte = *(arrayImagen + i);
+        unsigned char bitsDerecha = byte >> numRotacion;
+        unsigned char bitsMovidoAIzquierda = byte << (8 - numRotacion);
+        *(arrayImagen + i) = bitsDerecha | bitsMovidoAIzquierda;
+    }
+
+    return arrayImagen;
+}
+
+unsigned char *rotacionIzquierdaImagen(unsigned char *arrayImagen,
+                                       int numBytesImagen,
+                                       unsigned char numRotacion)
+{
+    for (int i = 0; i < numBytesImagen; i++) {
+        unsigned char byte = *(arrayImagen + i);
+        unsigned char bitsDerecha = byte << numRotacion;
+        unsigned char bitsMovidoAIzquierda = byte >> (8 - numRotacion);
+        *(arrayImagen + i) = bitsDerecha | bitsMovidoAIzquierda;
+    }
+
+    return arrayImagen;
+}
