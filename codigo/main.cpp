@@ -47,8 +47,7 @@ int main()
     int semilla = 0;
     int numPixels = 0;
     int numArchivos = 0;
-    bool resultadoComparacion;
-    bool tranformacionHallada = false;
+    bool transformacionHallada = false;
 
     //Cargar informacion de la mascara
     QString rutaMascara = "C:/Users/DELL/Documents/universidad/segundo_semestre/informatica_II/prueba_desafio/Caso1/M.bmp";
@@ -85,65 +84,89 @@ int main()
 
         unsigned char *arrayCopia = crearArrayCopia(arrayImagen, semilla, numBytesMascara);
 
-        while (not tranformacionHallada) {
+        while (not transformacionHallada) {
             //Proceso de prueba de posibles transformaciones
 
             //Desplazamientos
             for (int i = 1; i <= 8; i++) {
                 //Primera posible trasnformacion: Desplazamiento a la derecha
-                arrayCopia = desplazamientoDerecha(arrayImagen, semilla, arrayCopia, numBytesMascara, i);
-                resultadoComparacion = comparar(arrayTexto, numBytesMascara, arrayCopia, arrayMascara);
-                if (resultadoComparacion) {
-                    cout << "La transformacion aplicada es: Desplazamiento a la derecha de " << i << " pixeles" << endl;
-                    arrayImagen = desplazamientoDerechaImagen(arrayImagen, numBytesImagenes, i);
+                desplazamientoDerecha(arrayImagen, semilla, arrayCopia, numBytesMascara, i);
+                transformacionHallada = comparar(arrayTexto,
+                                                 numBytesMascara,
+                                                 arrayCopia,
+                                                 arrayMascara);
+                if (transformacionHallada) {
+                    cout << "La transformacion aplicada es: Desplazamiento a la derecha de " << i
+                         << " pixeles" << endl;
+                    desplazamientoDerechaImagen(arrayImagen, numBytesImagenes, i);
                     break;
                 }
 
-                //Segunda posible transformacion: Desplazamiento a las izquierda
-                arrayCopia = desplazamientoIzquierda(arrayImagen, semilla, arrayCopia, numBytesMascara, i);
-                resultadoComparacion = comparar(arrayTexto, numBytesMascara, arrayCopia, arrayMascara);
-                if (resultadoComparacion) {
-                    cout << "La transformacion aplicada es: Desplazamiento a la izquierda de " << i << " pixeles" << endl;
-                    arrayImagen = desplazamientoIzquierdaImagen(arrayImagen, numBytesImagenes, i);
-                    break;
+                if (i != 8) {
+                    //Segunda posible transformacion: Desplazamiento a las izquierda
+                    desplazamientoIzquierda(arrayImagen, semilla, arrayCopia, numBytesMascara, i);
+                    transformacionHallada = comparar(arrayTexto,
+                                                     numBytesMascara,
+                                                     arrayCopia,
+                                                     arrayMascara);
+                    if (transformacionHallada) {
+                        cout << "La transformacion aplicada es: Desplazamiento a la izquierda de "
+                             << i << " pixeles" << endl;
+                        desplazamientoIzquierdaImagen(arrayImagen, numBytesImagenes, i);
+                        break;
+                    }
                 }
             }
 
             //Rotaciones
-            for (int i = 1; i < 8; i++) {
-                //Primera posible trasnformacion: Rotacion a la derecha
-                arrayCopia = rotacionDerecha(arrayImagen, semilla, arrayCopia, numBytesMascara, i);
-                resultadoComparacion = comparar(arrayTexto, numBytesMascara, arrayCopia, arrayMascara);
-                if (resultadoComparacion) {
-                    cout << "La transformacion aplicada es: Rotacion a la derecha de " << i << " pixeles";
-                    arrayImagen = rotacionDerechaImagen(arrayImagen, numBytesImagenes, i);
-                    break;
-                }
+            if (not transformacionHallada) {
+                for (int i = 1; i < 8; i++) {
+                    //Primera posible trasnformacion: Rotacion a la derecha
+                    rotacionDerecha(arrayImagen, semilla, arrayCopia, numBytesMascara, i);
+                    transformacionHallada = comparar(arrayTexto,
+                                                     numBytesMascara,
+                                                     arrayCopia,
+                                                     arrayMascara);
+                    if (transformacionHallada) {
+                        cout << "La transformacion aplicada es: Rotacion a la derecha de " << i
+                             << " pixeles";
+                        rotacionDerechaImagen(arrayImagen, numBytesImagenes, i);
+                        break;
+                    }
 
-                //Segunda posible transformacion: Rotacion a las izquierda
-                arrayCopia = rotacionIzquierda(arrayImagen, semilla, arrayCopia, numBytesMascara, i);
-                resultadoComparacion = comparar(arrayTexto, numBytesMascara, arrayCopia, arrayMascara);
-                if (resultadoComparacion) {
-                    cout << "La transformacion aplicada es: Rotacion a la izquierda de " << i << " pixeles";
-                    arrayImagen = rotacionIzquierdaImagen(arrayImagen, numBytesImagenes, i);
-                    break;
+                    //Segunda posible transformacion: Rotacion a las izquierda
+                    rotacionIzquierda(arrayImagen, semilla, arrayCopia, numBytesMascara, i);
+                    transformacionHallada = comparar(arrayTexto,
+                                                     numBytesMascara,
+                                                     arrayCopia,
+                                                     arrayMascara);
+                    if (transformacionHallada) {
+                        cout << "La transformacion aplicada es: Rotacion a la izquierda de " << i
+                             << " pixeles";
+                        rotacionIzquierdaImagen(arrayImagen, numBytesImagenes, i);
+                        break;
+                    }
                 }
             }
 
             //XOR entre imagenes
-            arrayImagen = xorEntreImagenes(arrayImagen, arrayI_M, numBytesImagenes);
-
-            if (resultadoComparacion) {
-                tranformacionHallada = true;
-                cout << "La transformacion aplicada es: XOR entre imagenes";
+            if (not transformacionHallada) {
+                xorEntreImagenes(arrayImagen, arrayI_M, numBytesImagenes);
+                transformacionHallada = comparar(arrayTexto,
+                                                 numBytesMascara,
+                                                 arrayImagen,
+                                                 arrayMascara);
+                if (transformacionHallada) {
+                    cout << "La transformacion aplicada es: XOR entre imagenes";
+                }
             }
+
+            delete[] arrayTexto;
+            arrayTexto = nullptr;
+
+            delete[] arrayCopia;
+            arrayCopia = nullptr;
         }
-
-        delete[] arrayTexto;
-        arrayTexto = nullptr;
-
-        delete[] arrayCopia;
-        arrayCopia = nullptr;
     }
 
     delete[] arrayI_M;
