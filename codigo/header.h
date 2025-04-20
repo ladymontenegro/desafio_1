@@ -55,4 +55,9 @@ void rotacionIzquierdaImagen(unsigned char *arrayImagen,
                              int numBytesImagen,
                              unsigned char numRotacionn);
 
+void restaMascara(unsigned char *arrayImagen,
+                  int semilla,
+                  unsigned char *arrayMascara,
+                  int numBytesMascara);
+
 #endif // HEADER_H

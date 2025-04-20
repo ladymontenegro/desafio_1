@@ -14,6 +14,16 @@ unsigned char* crearArrayCopia(unsigned char* arrayOriginal, int semilla, int nu
     return arrayCopia;
 }
 
+void restaMascara(unsigned char *arrayImagen,
+                  int semilla,
+                  unsigned char *arrayMascara,
+                  int numBytesMascara)
+{
+    for (int i = 0; semilla <= numBytesMascara; semilla++, i++) {
+        *(arrayImagen + semilla) = *(arrayImagen + semilla) - *(arrayMascara + i);
+    }
+}
+
 unsigned char* loadPixels(QString input, int &width, int &height){
     /*
  * @brief Carga una imagen BMP desde un archivo y extrae los datos de píxeles en formato RGB.

@@ -22,7 +22,7 @@ void desplazamientoIzquierda(unsigned char *array,
                              unsigned char numDesplazamiento)
 {
     for (int i = 0; i < bytesMascara; semilla ++, i ++) {
-        *(arrayCopia + semilla) = *(array + semilla) << numDesplazamiento;
+        *(arrayCopia + i) = *(array + semilla) << numDesplazamiento;
     }
 }
 
