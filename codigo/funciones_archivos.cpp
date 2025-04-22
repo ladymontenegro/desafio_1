@@ -14,10 +14,10 @@ unsigned char* crearArrayCopia(unsigned char* arrayOriginal, int semilla, int nu
     return arrayCopia;
 }
 
-void restaMascara(unsigned char *arrayImagen,
-                  int semilla,
-                  unsigned char *arrayMascara,
-                  int numBytesMascara)
+void restarMascara(unsigned char *arrayImagen,
+                   int semilla,
+                   unsigned char *arrayMascara,
+                   int numBytesMascara)
 {
     for (int i = 0; semilla <= numBytesMascara; semilla++, i++) {
         *(arrayImagen + semilla) = *(arrayImagen + semilla) - *(arrayMascara + i);

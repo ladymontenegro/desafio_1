@@ -54,16 +54,23 @@ void rotacionIzquierda(unsigned char *array,
     }
 }
 
-void xorEntreImagenes(unsigned char *arrayImagen, unsigned char *arrayImagenI_M, int bytesImagenes)
+void xorEntreImagenes(unsigned char *arrayCopia,
+                      int semilla,
+                      unsigned char *arrayI_M,
+                      int bytesMascara)
 {
-    for (int i = 0; i < bytesImagenes; i++) {
-        *(arrayImagen + i) = *(arrayImagen + i) ^ *(arrayImagenI_M + i);
+    for (int i = 0; i < bytesMascara; semilla++, i++) {
+        *(arrayCopia + i) = *(arrayCopia + i) ^ *(arrayI_M + semilla);
     }
 }
 
-bool comparar(unsigned int* arrayTexto, int nBytes, unsigned char *arrayTransformado, unsigned char *arrayMascara){
+bool comparar(unsigned int *arrayTexto,
+              int nBytes,
+              unsigned char *arrayCopia,
+              unsigned char *arrayMascara)
+{
     for (int i = 0; i < nBytes; i ++){
-        if( (*(arrayTransformado + i))-(*(arrayMascara+i)) != (*(arrayTexto+i)) ){
+        if ((*(arrayCopia + i)) - (*(arrayMascara + i)) != (*(arrayTexto + i))) {
             return false;
         }
     }
