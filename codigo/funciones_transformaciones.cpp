@@ -61,9 +61,9 @@ void xorEntreImagenes(unsigned char *arrayImagen, unsigned char *arrayImagenI_M,
     }
 }
 
-bool comparar(unsigned int* arrayTexto, int nBytes, unsigned char *arrayTransformado, unsigned char *arrayMascara){
+bool comparar(unsigned int* arrayTexto, int nBytes, unsigned char *arrayCopia){
     for (int i = 0; i < nBytes; i ++){
-        if( (*(arrayTransformado + i))-(*(arrayMascara+i)) != (*(arrayTexto+i)) ){
+        if(static_cast<unsigned int>(*(arrayCopia + i)) != *(arrayTexto+i)){
             return false;
         }
     }

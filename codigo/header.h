@@ -37,7 +37,7 @@ void rotacionIzquierda(unsigned char *array,
 
 void xorEntreImagenes(unsigned char *arrayImagen, unsigned char *arrayImagenI_M, int bytesImagenes);
 
-bool comparar(unsigned int* arrayTexto, int nBytes, unsigned char *arrayTransformado, unsigned char *arrayMascara);
+bool comparar(unsigned int* arrayTexto, int nBytes, unsigned char *arrayCopia);
 
 void desplazamientoDerechaImagen(unsigned char *arrayImagen,
                                  int numBytesImagen,
