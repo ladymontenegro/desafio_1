@@ -35,7 +35,10 @@ void rotacionIzquierda(unsigned char *array,
                        int bytesMascara,
                        unsigned char numRotacion);
 
-void xorEntreImagenes(unsigned char *arrayImagen, unsigned char *arrayImagenI_M, int bytesImagenes);
+void xorEntreImagenes(unsigned char *arrayCopia,
+                      int semilla,
+                      unsigned char *arrayI_M,
+                      int bytesMascara);
 
 bool comparar(unsigned int* arrayTexto, int nBytes, unsigned char *arrayCopia);
 
@@ -55,9 +58,9 @@ void rotacionIzquierdaImagen(unsigned char *arrayImagen,
                              int numBytesImagen,
                              unsigned char numRotacionn);
 
-void restaMascara(unsigned char *arrayImagen,
-                  int semilla,
-                  unsigned char *arrayMascara,
-                  int numBytesMascara);
+void restarMascara(unsigned char *arrayImagen,
+                   int semilla,
+                   unsigned char *arrayMascara,
+                   int numBytesMascara);
 
 #endif // HEADER_H

@@ -69,12 +69,12 @@ int main()
 
     int numBytesImagenes = widthI_D * heightI_D * 3;
 
-    cout << "Ingrese el numero de archivos de texto a comparar: " << endl;
+    cout << "Ingrese el numero de archivos de texto a comparar: ";
     cin >> numArchivos;
 
     for (int i = 1; i <= numArchivos; i++) {
         //Seleccionar archivo de texto
-        cout << "Ingrese la ruta del archivo: " << endl;
+        cout << "Ingrese la ruta del archivo anterior: ";
         cin >> nombreArchivo;
 
         const char *punteroArchivo = nombreArchivo.c_str(); //.c_str es para convertir el string a const char
@@ -82,39 +82,22 @@ int main()
 
         int numBytesMascara = numPixels * 3;
 
+        restarMascara(arrayImagen, semilla, arrayMascara, numBytesMascara);
+
         unsigned char *arrayCopia = crearArrayCopia(arrayImagen, semilla, numBytesMascara);
 
         while (not transformacionHallada) {
             //Proceso de prueba de posibles transformaciones
 
-            //Desplazamientos
-            for (int i = 1; i <= 8; i++) {
-                //Primera posible trasnformacion: Desplazamiento a la derecha
-                desplazamientoDerecha(arrayImagen, semilla, arrayCopia, numBytesMascara, i);
+            //XOR entre imagenes
+            if (not transformacionHallada) {
+                xorEntreImagenes(arrayCopia, semilla, arrayI_M, numBytesMascara);
                 transformacionHallada = comparar(arrayTexto,
                                                  numBytesMascara,
-                                                 arrayCopia,
+                                                 arrayImagen,
                                                  arrayMascara);
                 if (transformacionHallada) {
-                    cout << "La transformacion aplicada es: Desplazamiento a la derecha de " << i
-                         << " pixeles" << endl;
-                    desplazamientoDerechaImagen(arrayImagen, numBytesImagenes, i);
-                    break;
-                }
-
-                if (i != 8) {
-                    //Segunda posible transformacion: Desplazamiento a las izquierda
-                    desplazamientoIzquierda(arrayImagen, semilla, arrayCopia, numBytesMascara, i);
-                    transformacionHallada = comparar(arrayTexto,
-                                                     numBytesMascara,
-                                                     arrayCopia,
-                                                     arrayMascara);
-                    if (transformacionHallada) {
-                        cout << "La transformacion aplicada es: Desplazamiento a la izquierda de "
-                             << i << " pixeles" << endl;
-                        desplazamientoIzquierdaImagen(arrayImagen, numBytesImagenes, i);
-                        break;
-                    }
+                    cout << "La transformacion aplicada es: XOR entre imagenes";
                 }
             }
 
@@ -128,7 +111,7 @@ int main()
                                                      arrayCopia,
                                                      arrayMascara);
                     if (transformacionHallada) {
-                        cout << "La transformacion aplicada es: Rotacion a la derecha de " << i
+                        cout << "La transformacion aplicada es: Rotacion a la izquierda de " << i
                              << " pixeles";
                         rotacionDerechaImagen(arrayImagen, numBytesImagenes, i);
                         break;
@@ -141,23 +124,11 @@ int main()
                                                      arrayCopia,
                                                      arrayMascara);
                     if (transformacionHallada) {
-                        cout << "La transformacion aplicada es: Rotacion a la izquierda de " << i
+                        cout << "La transformacion aplicada es: Rotacion a la derecha de " << i
                              << " pixeles";
                         rotacionIzquierdaImagen(arrayImagen, numBytesImagenes, i);
                         break;
                     }
-                }
-            }
-
-            //XOR entre imagenes
-            if (not transformacionHallada) {
-                xorEntreImagenes(arrayImagen, arrayI_M, numBytesImagenes);
-                transformacionHallada = comparar(arrayTexto,
-                                                 numBytesMascara,
-                                                 arrayImagen,
-                                                 arrayMascara);
-                if (transformacionHallada) {
-                    cout << "La transformacion aplicada es: XOR entre imagenes";
                 }
             }
         }
@@ -167,8 +138,6 @@ int main()
 
         delete[] arrayCopia;
         arrayCopia = nullptr;
-
-        restaMascara(arrayImagen, semilla, arrayMascara, numBytesMascara);
     }
 
     delete[] arrayI_M;
