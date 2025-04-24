@@ -40,7 +40,7 @@ void xorEntreImagenes(unsigned short int *arrayCopia,
                       unsigned char *arrayI_M,
                       int bytesMascara);
 
-bool comparar(unsigned int *arrayTexto, int nBytes, unsigned short int *arrayCopia);
+bool comparar(unsigned int *arrayTexto, unsigned short int *arrayCopia);
 
 void desplazamientoDerechaImagen(unsigned char *arrayImagen,
                                  int numBytesImagen,

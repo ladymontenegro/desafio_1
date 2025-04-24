@@ -44,29 +44,37 @@ int main()
 {
     //Definicion de variables
     string nombreArchivo = "";
+    string rutaI_D = "";
+    string rutaMascara = "";
+    string rutaI_M = "";
+    string rutaSalida = "";
     int semilla = 0;
     int numPixels = 0;
     int numArchivos = 0;
-    QString rutaSalida
-        = "C:/Users/steve/OneDrive/Escritorio/DESAFIO_01/DesafioI/Caso1/resultado.bmp";
-
-    //Cargar informacion de la mascara
-    QString rutaMascara = "C:/Users/steve/OneDrive/Escritorio/DESAFIO_01/DesafioI/Caso1/M.bmp";
-    int widthMascara = 0;
-    int heightMascara = 0;
-    unsigned char *arrayMascara = loadPixels(rutaMascara, widthMascara, heightMascara);
 
     //Cargar informacion de I_D
-    QString rutaI_D = "C:/Users/steve/OneDrive/Escritorio/DESAFIO_01/DesafioI/Caso1/I_D.bmp";
+    cout << "Ingrese la ruta de la imagen encriptada: ";
+    cin >> rutaI_D;
+    QString qRutaI_D = QString(rutaI_D.c_str());
     int widthI_D = 0;
     int heightI_D = 0;
-    unsigned char *arrayImagen = loadPixels(rutaI_D, widthI_D, heightI_D);
+    unsigned char *arrayImagen = loadPixels(qRutaI_D, widthI_D, heightI_D);
+
+    //Cargar informacion de la mascara
+    cout << "Ingrese la ruta de la mascara: ";
+    cin >> rutaMascara;
+    QString qRutaMascara = QString(rutaMascara.c_str());
+    int widthMascara = 0;
+    int heightMascara = 0;
+    unsigned char *arrayMascara = loadPixels(qRutaMascara, widthMascara, heightMascara);
 
     //Cargar informacion de I_M
-    QString rutaI_M = "C:/Users/steve/OneDrive/Escritorio/DESAFIO_01/DesafioI/Caso1/I_M.bmp";
+    cout << "Ingrese la ruta de la imagen aleatoria (I_M): ";
+    cin >> rutaI_M;
+    QString qRutaI_M = QString(rutaI_M.c_str());
     int widthI_M = 0;
     int heightI_M = 0;
-    unsigned char *arrayI_M = loadPixels(rutaI_M, widthI_M, heightI_M);
+    unsigned char *arrayI_M = loadPixels(qRutaI_M, widthI_M, heightI_M);
 
     int numBytesImagenes = widthI_D * heightI_D * 3;
 
@@ -95,7 +103,7 @@ int main()
             if (not transformacionHallada) {
                 xorEntreImagenes(arrayCopia, semilla, arrayI_M, numBytesMascara);
                 sumarMascara(arrayCopia, arrayMascara, numBytesMascara);
-                transformacionHallada = comparar(arrayTexto, numBytesMascara, arrayCopia);
+                transformacionHallada = comparar(arrayTexto, arrayCopia);
 
                 if (transformacionHallada) {
                     xorImagenCompleta(arrayImagen, numBytesImagenes, arrayI_M);
@@ -109,7 +117,7 @@ int main()
                     //Primera posible trasnformacion: Rotacion a la derecha
                     rotacionDerecha(arrayImagen, semilla, arrayCopia, numBytesMascara, i);
                     sumarMascara(arrayCopia, arrayMascara, numBytesMascara);
-                    transformacionHallada = comparar(arrayTexto, numBytesMascara, arrayCopia);
+                    transformacionHallada = comparar(arrayTexto, arrayCopia);
 
                     if (transformacionHallada) {
                         cout << "La transformacion aplicada es: Rotacion a la izquierda de " << i
@@ -121,7 +129,7 @@ int main()
                     //Segunda posible transformacion: Rotacion a las izquierda
                     rotacionIzquierda(arrayImagen, semilla, arrayCopia, numBytesMascara, i);
                     sumarMascara(arrayCopia, arrayMascara, numBytesMascara);
-                    transformacionHallada = comparar(arrayTexto, numBytesMascara, arrayCopia);
+                    transformacionHallada = comparar(arrayTexto, arrayCopia);
 
                     if (transformacionHallada) {
                         cout << "La transformacion aplicada es: Rotacion a la derecha de " << i
@@ -142,7 +150,12 @@ int main()
         arrayCopia = nullptr;
     }
 
-    exportImage(arrayImagen, widthI_D, heightI_D, rutaSalida);
+    cout << endl << "!! IMAGEN DESENCRIPTADA !!" << endl;
+    cout << "Ingrese la ruta para guardar la imagen: ";
+    cin >> rutaSalida;
+    QString qRutaSalida = QString(rutaSalida.c_str());
+
+    exportImage(arrayImagen, widthI_D, heightI_D, qRutaSalida);
 
     delete[] arrayI_M;
     arrayI_M = nullptr;

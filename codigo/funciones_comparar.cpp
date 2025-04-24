@@ -10,12 +10,11 @@ void sumarMascara(unsigned short int *arrayCopia, unsigned char *arrayMascara, i
     }
 }
 
-bool comparar(unsigned int *arrayTexto, int nBytes, unsigned short int *arrayCopia)
+bool comparar(unsigned int *arrayTexto, unsigned short int *arrayCopia)
 {
-    for (int i = 0; i < nBytes; i++) {
-        if (static_cast<unsigned short int>(*(arrayCopia + i)) != *(arrayTexto + i)) {
-            return false;
-        }
+    if (static_cast<unsigned short int>(*(arrayCopia)) != *(arrayTexto)) {
+        return false;
+    } else {
+        return true;
     }
-    return true;
 }
