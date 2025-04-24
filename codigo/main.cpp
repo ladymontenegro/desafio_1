@@ -48,22 +48,22 @@ int main()
     int numPixels = 0;
     int numArchivos = 0;
     QString rutaSalida
-        = "C:/Users/steve/OneDrive/Escritorio/DESAFIO_01/DesafioI/Caso2/resultado.bmp";
+        = "C:/Users/steve/OneDrive/Escritorio/DESAFIO_01/DesafioI/Caso1/resultado.bmp";
 
     //Cargar informacion de la mascara
-    QString rutaMascara = "C:/Users/steve/OneDrive/Escritorio/DESAFIO_01/DesafioI/Caso2/M.bmp";
+    QString rutaMascara = "C:/Users/steve/OneDrive/Escritorio/DESAFIO_01/DesafioI/Caso1/M.bmp";
     int widthMascara = 0;
     int heightMascara = 0;
     unsigned char *arrayMascara = loadPixels(rutaMascara, widthMascara, heightMascara);
 
     //Cargar informacion de I_D
-    QString rutaI_D = "C:/Users/steve/OneDrive/Escritorio/DESAFIO_01/DesafioI/Caso2/I_D.bmp";
+    QString rutaI_D = "C:/Users/steve/OneDrive/Escritorio/DESAFIO_01/DesafioI/Caso1/I_D.bmp";
     int widthI_D = 0;
     int heightI_D = 0;
     unsigned char *arrayImagen = loadPixels(rutaI_D, widthI_D, heightI_D);
 
     //Cargar informacion de I_M
-    QString rutaI_M = "C:/Users/steve/OneDrive/Escritorio/DESAFIO_01/DesafioI/Caso2/I_M.bmp";
+    QString rutaI_M = "C:/Users/steve/OneDrive/Escritorio/DESAFIO_01/DesafioI/Caso1/I_M.bmp";
     int widthI_M = 0;
     int heightI_M = 0;
     unsigned char *arrayI_M = loadPixels(rutaI_M, widthI_M, heightI_M);
