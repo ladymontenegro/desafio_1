@@ -6,7 +6,7 @@ using namespace std;
 
 void desplazamientoDerecha(unsigned char *array,
                            int semilla,
-                           unsigned char *arrayCopia,
+                           unsigned short int *arrayCopia,
                            int bytesMascara,
                            unsigned char numDesplazamiento)
 {
@@ -17,7 +17,7 @@ void desplazamientoDerecha(unsigned char *array,
 
 void desplazamientoIzquierda(unsigned char *array,
                              int semilla,
-                             unsigned char *arrayCopia,
+                             unsigned short int *arrayCopia,
                              int bytesMascara,
                              unsigned char numDesplazamiento)
 {
@@ -28,7 +28,7 @@ void desplazamientoIzquierda(unsigned char *array,
 
 void rotacionDerecha(unsigned char *array,
                      int semilla,
-                     unsigned char *arrayCopia,
+                     unsigned short int *arrayCopia,
                      int bytesMascara,
                      unsigned char numRotacion)
 {
@@ -42,7 +42,7 @@ void rotacionDerecha(unsigned char *array,
 
 void rotacionIzquierda(unsigned char *array,
                        int semilla,
-                       unsigned char *arrayCopia,
+                       unsigned short int *arrayCopia,
                        int bytesMascara,
                        unsigned char numRotacion)
 {
@@ -54,7 +54,7 @@ void rotacionIzquierda(unsigned char *array,
     }
 }
 
-void xorEntreImagenes(unsigned char *arrayCopia,
+void xorEntreImagenes(unsigned short int *arrayCopia,
                       int semilla,
                       unsigned char *arrayI_M,
                       int bytesMascara)
@@ -64,9 +64,10 @@ void xorEntreImagenes(unsigned char *arrayCopia,
     }
 }
 
-bool comparar(unsigned int* arrayTexto, int nBytes, unsigned char *arrayCopia){
+bool comparar(unsigned int *arrayTexto, int nBytes, unsigned short int *arrayCopia)
+{
     for (int i = 0; i < nBytes; i ++){
-        if(static_cast<unsigned int>(*(arrayCopia + i)) != *(arrayTexto+i)){
+        if (static_cast<unsigned short int>(*(arrayCopia + i)) != *(arrayTexto + i)) {
             return false;
         }
     }
@@ -111,5 +112,12 @@ void rotacionIzquierdaImagen(unsigned char *arrayImagen,
         unsigned char bitsDerecha = byte << numRotacion;
         unsigned char bitsMovidoAIzquierda = byte >> (8 - numRotacion);
         *(arrayImagen + i) = bitsDerecha | bitsMovidoAIzquierda;
+    }
+}
+
+void xorImagenCompleta(unsigned char *arrayImagen, int numBytesImagen, unsigned char *arrayI_M)
+{
+    for (int i = 0; i < numBytesImagen; i++) {
+        *(arrayImagen + i) = *(arrayImagen + i) ^ *(arrayI_M + i);
     }
 }

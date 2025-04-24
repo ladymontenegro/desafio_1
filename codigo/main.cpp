@@ -47,22 +47,23 @@ int main()
     int semilla = 0;
     int numPixels = 0;
     int numArchivos = 0;
-    bool transformacionHallada = false;
+    QString rutaSalida
+        = "C:/Users/steve/OneDrive/Escritorio/DESAFIO_01/DesafioI/Caso2/resultado.bmp";
 
     //Cargar informacion de la mascara
-    QString rutaMascara = "C:/Users/DELL/Documents/universidad/segundo_semestre/informatica_II/prueba_desafio/Caso1/M.bmp";
+    QString rutaMascara = "C:/Users/steve/OneDrive/Escritorio/DESAFIO_01/DesafioI/Caso2/M.bmp";
     int widthMascara = 0;
     int heightMascara = 0;
     unsigned char *arrayMascara = loadPixels(rutaMascara, widthMascara, heightMascara);
 
     //Cargar informacion de I_D
-    QString rutaI_D = "C:/Users/DELL/Documents/universidad/segundo_semestre/informatica_II/prueba_desafio/Caso1/I_D.bmp";
+    QString rutaI_D = "C:/Users/steve/OneDrive/Escritorio/DESAFIO_01/DesafioI/Caso2/I_D.bmp";
     int widthI_D = 0;
     int heightI_D = 0;
     unsigned char *arrayImagen = loadPixels(rutaI_D, widthI_D, heightI_D);
 
     //Cargar informacion de I_M
-    QString rutaI_M = "C:/Users/DELL/Documents/universidad/segundo_semestre/informatica_II/prueba_desafio/Caso1/I_M.bmp";
+    QString rutaI_M = "C:/Users/steve/OneDrive/Escritorio/DESAFIO_01/DesafioI/Caso2/I_M.bmp";
     int widthI_M = 0;
     int heightI_M = 0;
     unsigned char *arrayI_M = loadPixels(rutaI_M, widthI_M, heightI_M);
@@ -74,17 +75,18 @@ int main()
 
     for (int i = 1; i <= numArchivos; i++) {
         //Seleccionar archivo de texto
-        cout << "Ingrese la ruta del archivo anterior: ";
+        cout << "Ingrese la ruta del archivo a comparar: ";
         cin >> nombreArchivo;
 
-        const char *punteroArchivo = nombreArchivo.c_str(); //.c_str es para convertir el string a const char
+        const char *punteroArchivo = nombreArchivo
+                                         .c_str(); //.c_str es para convertir el string a const char
         unsigned int *arrayTexto = loadSeedMasking(punteroArchivo, semilla, numPixels);
 
         int numBytesMascara = numPixels * 3;
 
-        restarMascara(arrayImagen, semilla, arrayMascara, numBytesMascara);
+        unsigned short int *arrayCopia = crearArrayCopia(arrayImagen, semilla, numBytesMascara);
 
-        unsigned char *arrayCopia = crearArrayCopia(arrayImagen, semilla, numBytesMascara);
+        bool transformacionHallada = false;
 
         while (not transformacionHallada) {
             //Proceso de prueba de posibles transformaciones
@@ -92,12 +94,12 @@ int main()
             //XOR entre imagenes
             if (not transformacionHallada) {
                 xorEntreImagenes(arrayCopia, semilla, arrayI_M, numBytesMascara);
-                transformacionHallada = comparar(arrayTexto,
-                                                 numBytesMascara,
-                                                 arrayImagen,
-                                                 arrayMascara);
+                sumarMascara(arrayCopia, arrayMascara, numBytesMascara);
+                transformacionHallada = comparar(arrayTexto, numBytesMascara, arrayCopia);
+
                 if (transformacionHallada) {
-                    cout << "La transformacion aplicada es: XOR entre imagenes";
+                    xorImagenCompleta(arrayImagen, numBytesImagenes, arrayI_M);
+                    cout << "La transformacion aplicada es: XOR entre imagenes" << endl;
                 }
             }
 
@@ -106,26 +108,24 @@ int main()
                 for (int i = 1; i < 8; i++) {
                     //Primera posible trasnformacion: Rotacion a la derecha
                     rotacionDerecha(arrayImagen, semilla, arrayCopia, numBytesMascara, i);
-                    transformacionHallada = comparar(arrayTexto,
-                                                     numBytesMascara,
-                                                     arrayCopia,
-                                                     arrayMascara);
+                    sumarMascara(arrayCopia, arrayMascara, numBytesMascara);
+                    transformacionHallada = comparar(arrayTexto, numBytesMascara, arrayCopia);
+
                     if (transformacionHallada) {
                         cout << "La transformacion aplicada es: Rotacion a la izquierda de " << i
-                             << " pixeles";
+                             << " pixeles" << endl;
                         rotacionDerechaImagen(arrayImagen, numBytesImagenes, i);
                         break;
                     }
 
                     //Segunda posible transformacion: Rotacion a las izquierda
                     rotacionIzquierda(arrayImagen, semilla, arrayCopia, numBytesMascara, i);
-                    transformacionHallada = comparar(arrayTexto,
-                                                     numBytesMascara,
-                                                     arrayCopia,
-                                                     arrayMascara);
+                    sumarMascara(arrayCopia, arrayMascara, numBytesMascara);
+                    transformacionHallada = comparar(arrayTexto, numBytesMascara, arrayCopia);
+
                     if (transformacionHallada) {
                         cout << "La transformacion aplicada es: Rotacion a la derecha de " << i
-                             << " pixeles";
+                             << " pixeles" << endl;
                         rotacionIzquierdaImagen(arrayImagen, numBytesImagenes, i);
                         break;
                     }
@@ -133,12 +133,16 @@ int main()
             }
         }
 
+        numPixels = 0;
+
         delete[] arrayTexto;
         arrayTexto = nullptr;
 
         delete[] arrayCopia;
         arrayCopia = nullptr;
     }
+
+    exportImage(arrayImagen, widthI_D, heightI_D, rutaSalida);
 
     delete[] arrayI_M;
     arrayI_M = nullptr;

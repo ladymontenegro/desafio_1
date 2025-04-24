@@ -5,22 +5,20 @@
 
 using namespace std;
 
-unsigned char* crearArrayCopia(unsigned char* arrayOriginal, int semilla, int numBytesMascara){
-    unsigned char* arrayCopia = new unsigned char[numBytesMascara];
+unsigned short int *crearArrayCopia(unsigned char *arrayOriginal, int semilla, int numBytesMascara)
+{
+    unsigned short int *arrayCopia = new unsigned short int[numBytesMascara];
 
-    for (int i = 0; i < numBytesMascara; semilla ++, i ++){
-        (*(arrayCopia + i)) = (*(arrayOriginal + semilla));
+    for (int i = 0; i < numBytesMascara; semilla++, i++) {
+        *(arrayCopia + i) = *(arrayOriginal + semilla);
     }
     return arrayCopia;
 }
 
-void restarMascara(unsigned char *arrayImagen,
-                   int semilla,
-                   unsigned char *arrayMascara,
-                   int numBytesMascara)
+void sumarMascara(unsigned short int *arrayCopia, unsigned char *arrayMascara, int numBytesMascara)
 {
-    for (int i = 0; semilla <= numBytesMascara; semilla++, i++) {
-        *(arrayImagen + semilla) = *(arrayImagen + semilla) - *(arrayMascara + i);
+    for (int i = 0; i < numBytesMascara; i++) {
+        *(arrayCopia + i) = *(arrayCopia + i) + *(arrayMascara + i);
     }
 }
 
@@ -188,8 +186,8 @@ unsigned int* loadSeedMasking(const char* nombreArchivo, int &seed, int &n_pixel
     archivo.close();
 
     // Mostrar información de control en consola
-    cout << "Semilla: " << seed << endl;
-    cout << "Cantidad de pixeles leidos: " << n_pixels << endl;
+    //cout << "Semilla: " << seed << endl;
+    //cout << "Cantidad de pixeles leidos: " << n_pixels << endl;
 
     // Retornar el puntero al arreglo con los datos RGB
     return RGB;

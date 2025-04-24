@@ -3,7 +3,7 @@
 
 #include <QCoreApplication>
 
-unsigned char* crearArrayCopia(unsigned char*arrayOriginal, int semilla, int numBytesMascara);
+unsigned short int *crearArrayCopia(unsigned char *arrayOriginal, int semilla, int numBytesMascara);
 
 unsigned char* loadPixels(QString input, int &width, int &height);
 
@@ -13,34 +13,34 @@ unsigned int* loadSeedMasking(const char* nombreArchivo, int &seed, int &n_pixel
 
 void desplazamientoDerecha(unsigned char *array,
                            int semilla,
-                           unsigned char *arrayCopia,
+                           unsigned short int *arrayCopia,
                            int bytesMascara,
                            unsigned char numDesplazamiento);
 
 void desplazamientoIzquierda(unsigned char *array,
                              int semilla,
-                             unsigned char *arrayCopia,
+                             unsigned short int *arrayCopia,
                              int bytesMascara,
                              unsigned char numDesplazamiento);
 
 void rotacionDerecha(unsigned char *array,
                      int semilla,
-                     unsigned char *arrayCopia,
+                     unsigned short int *arrayCopia,
                      int bytesMascara,
                      unsigned char numRotacion);
 
 void rotacionIzquierda(unsigned char *array,
                        int semilla,
-                       unsigned char *arrayCopia,
+                       unsigned short int *arrayCopia,
                        int bytesMascara,
                        unsigned char numRotacion);
 
-void xorEntreImagenes(unsigned char *arrayCopia,
+void xorEntreImagenes(unsigned short int *arrayCopia,
                       int semilla,
                       unsigned char *arrayI_M,
                       int bytesMascara);
 
-bool comparar(unsigned int* arrayTexto, int nBytes, unsigned char *arrayCopia);
+bool comparar(unsigned int *arrayTexto, int nBytes, unsigned short int *arrayCopia);
 
 void desplazamientoDerechaImagen(unsigned char *arrayImagen,
                                  int numBytesImagen,
@@ -58,9 +58,8 @@ void rotacionIzquierdaImagen(unsigned char *arrayImagen,
                              int numBytesImagen,
                              unsigned char numRotacionn);
 
-void restarMascara(unsigned char *arrayImagen,
-                   int semilla,
-                   unsigned char *arrayMascara,
-                   int numBytesMascara);
+void xorImagenCompleta(unsigned char *arrayImagen, int numBytesImagen, unsigned char *arrayI_M);
+
+void sumarMascara(unsigned short int *arrayCopia, unsigned char *arrayMascara, int numBytesMascara);
 
 #endif // HEADER_H
