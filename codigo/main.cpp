@@ -86,8 +86,7 @@ int main()
         cout << "Ingrese la ruta del archivo a comparar: ";
         cin >> nombreArchivo;
 
-        const char *punteroArchivo = nombreArchivo
-                                         .c_str(); //.c_str es para convertir el string a const char
+        const char *punteroArchivo = nombreArchivo.c_str(); //.c_str es para convertir el string a const char
         unsigned int *arrayTexto = loadSeedMasking(punteroArchivo, semilla, numPixels);
 
         int numBytesMascara = numPixels * 3;

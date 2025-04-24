@@ -7,6 +7,19 @@ using namespace std;
 
 unsigned short int *crearArrayCopia(unsigned char *arrayOriginal, int semilla, int numBytesMascara)
 {
+    /*
+ * @brief Crea un nuevo arreglo de unsigned short int y copia una porcion de un arreglo de unsigned char.
+ *
+ * Esta funcion asigna dinamicamente memoria para un nuevo arreglo de 'unsigned short int' con un tamaño de
+ * 'numBytesMascara' elementos. Luego, copia 'numBytesMascara' bytes del 'arrayOriginal', comenzando desde
+ * el indice 'semilla', al nuevo arreglo. Cada byte del 'arrayOriginal' se copia a un elemento de
+ * 'unsigned short int' en el nuevo arreglo.
+ *
+ * @param arrayOriginal Puntero al arreglo de unsigned char del cual se copiaran los datos.
+ * @param semilla Indice de inicio en el 'arrayOriginal' para la copia de los bytes.
+ * @param numBytesMascara Numero de bytes a copiar desde 'arrayOriginal' al nuevo arreglo.
+ * @return Puntero al nuevo arreglo de unsigned short int que contiene la copia de los bytes.
+ */
     unsigned short int *arrayCopia = new unsigned short int[numBytesMascara];
 
     for (int i = 0; i < numBytesMascara; semilla++, i++) {
