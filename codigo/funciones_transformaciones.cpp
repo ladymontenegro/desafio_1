@@ -4,7 +4,7 @@ using namespace std;
 
 //Funciones de transformaciones sobre la porcion del arreglo
 
-void desplazamientoDerecha(unsigned char *array, int semilla, unsigned short int *arrayCopia, int bytesMascara, unsigned char numDesplazamiento)
+void desplazamientoDerecha(unsigned char *arrayImagen = nullptr, int semilla = 0, unsigned short int *arrayCopia = nullptr, int nBytes = 0, unsigned char numDesplazamiento = 0)
 {
     /*
  * @brief Realiza un desplazamiento a la derecha de los bits de una porcion de un arreglo.
@@ -20,12 +20,18 @@ void desplazamientoDerecha(unsigned char *array, int semilla, unsigned short int
  * @param bytesMascara Numero de bytes a procesar desde el arreglo 'array'.
  * @param numDesplazamiento Numero de bits a desplazar hacia la derecha (tipo unsigned char).
  */
-    for (int i = 0; i < bytesMascara; semilla ++, i ++) {
-        *(arrayCopia + i) = *(array + semilla) >> numDesplazamiento;
+    if (semilla != 0){
+        for (int i = 0; i < nBytes; semilla ++, i ++) {
+            *(arrayCopia + i) = *(arrayImagen + semilla) >> numDesplazamiento;
+        }
+    } else {
+        for (int i = 0; i < nBytes; i ++) {
+            *(arrayImagen + i) = *(arrayImagen + i) >> numDesplazamiento;
+        }
     }
 }
 
-void desplazamientoIzquierda(unsigned char *array, int semilla, unsigned short int *arrayCopia, int bytesMascara, unsigned char numDesplazamiento)
+void desplazamientoIzquierda(unsigned char *arrayImagen = nullptr, int semilla = 0, unsigned short int *arrayCopia = nullptr, int nBytes = 0, unsigned char numDesplazamiento = 0)
 {
     /*
  * @brief Realiza un desplazamiento a la izquierda de los bits de una porcion de un arreglo.
@@ -41,12 +47,18 @@ void desplazamientoIzquierda(unsigned char *array, int semilla, unsigned short i
  * @param bytesMascara Cantidad de bytes a procesar del arreglo 'array'.
  * @param numDesplazamiento Numero de bits a desplazar hacia la izquierda (tipo unsigned char).
  */
-    for (int i = 0; i < bytesMascara; semilla ++, i ++) {
-        *(arrayCopia + i) = *(array + semilla) << numDesplazamiento;
+    if (semilla != 0){
+        for (int i = 0; i < nBytes; semilla ++, i ++) {
+            *(arrayCopia + i) = *(arrayImagen + semilla) << numDesplazamiento;
+        }
+    } else {
+        for (int i = 0; i < nBytes; i ++) {
+            *(arrayImagen + i) = *(arrayImagen + i) << numDesplazamiento;
+        }
     }
 }
 
-void rotacionDerecha(unsigned char *array, int semilla, unsigned short int *arrayCopia, int bytesMascara, unsigned char numRotacion)
+void rotacionDerecha(unsigned char *arrayImagen = nullptr, int semilla = 0, unsigned short int *arrayCopia = nullptr, int nBytes = 0, unsigned char numRotacion = 0)
 {
     /*
  * @brief Realiza una rotacion a la derecha de los bits de una porcion de un arreglo.
@@ -62,15 +74,26 @@ void rotacionDerecha(unsigned char *array, int semilla, unsigned short int *arra
  * @param bytesMascara Numero de bytes a rotar.
  * @param numRotacion Numero de bits a rotar hacia la derecha (tipo unsigned char).
  */
-    for (int i = 0; i < bytesMascara; semilla ++, i ++) {
-        unsigned char byte = *(array + semilla);
-        unsigned char bitsDerecha = byte >> numRotacion;
-        unsigned char bitsMovidoAIzquierda = byte << (8 - numRotacion);
-        *(arrayCopia + i) = bitsDerecha | bitsMovidoAIzquierda;
+
+    if (semilla !=0){
+        for (int i = 0; i < nBytes; semilla ++, i ++) {
+            unsigned char byte = *(arrayImagen + semilla);
+            unsigned char bitsDerecha = byte >> numRotacion;
+            unsigned char bitsMovidoAIzquierda = byte << (8 - numRotacion);
+            *(arrayCopia + i) = bitsDerecha | bitsMovidoAIzquierda;
+        }
+    } else {
+        for (int i = 0; i < nBytes; i ++) {
+            unsigned char byte = *(arrayImagen + i);
+            unsigned char bitsDerecha = byte >> numRotacion;
+            unsigned char bitsMovidoAIzquierda = byte << (8 - numRotacion);
+            *(arrayImagen + i) = bitsDerecha | bitsMovidoAIzquierda;
+        }
     }
+
 }
 
-void rotacionIzquierda(unsigned char *array, int semilla, unsigned short int *arrayCopia, int bytesMascara, unsigned char numRotacion)
+void rotacionIzquierda(unsigned char *arrayImagen = nullptr, int semilla = 0, unsigned short int *arrayCopia = nullptr, int nBytes = 0, unsigned char numRotacion = 0)
 {
     /*
  * @brief Realiza una rotacion a la izquierda de los bits de una porcion de un arreglo.
@@ -86,15 +109,25 @@ void rotacionIzquierda(unsigned char *array, int semilla, unsigned short int *ar
  * @param bytesMascara Cantidad de bytes a rotar.
  * @param numRotacion Numero de bits a rotar hacia la izquierda (tipo unsigned char).
  */
-    for (int i = 0; i < bytesMascara; semilla ++, i ++) {
-        unsigned char byte = *(array + semilla);
-        unsigned char bitsIzquierda = byte << numRotacion;
-        unsigned char bitsMovidoADerecha = byte >> (8 - numRotacion);
-        *(arrayCopia + i) = bitsIzquierda | bitsMovidoADerecha;
+    if (semilla != 0){
+        for (int i = 0; i < nBytes; semilla ++, i ++) {
+            unsigned char byte = *(arrayImagen + semilla);
+            unsigned char bitsIzquierda = byte << numRotacion;
+            unsigned char bitsMovidoADerecha = byte >> (8 - numRotacion);
+            *(arrayCopia + i) = bitsIzquierda | bitsMovidoADerecha;
+        }
+    }
+    else {
+        for (int i = 0; i < nBytes; i ++) {
+            unsigned char byte = *(arrayImagen + i);
+            unsigned char bitsIzquierda = byte << numRotacion;
+            unsigned char bitsMovidoADerecha = byte >> (8 - numRotacion);
+            *(arrayImagen + i) = bitsIzquierda | bitsMovidoADerecha;
+        }
     }
 }
 
-void xorEntreImagenes(unsigned short int *arrayCopia, int semilla, unsigned char *arrayI_M, int bytesMascara)
+void xorEntreImagenes(unsigned char* arrayImagen = nullptr, unsigned short int *arrayCopia = nullptr, int semilla = 0, unsigned char *arrayI_M = nullptr, int nBytes = 0)
 {
     /*
  * @brief Aplica una operacion XOR bit a bit entre una porcion de un arreglo y otra.
@@ -109,7 +142,14 @@ void xorEntreImagenes(unsigned short int *arrayCopia, int semilla, unsigned char
  * @param arrayI_M Puntero al arreglo de unsigned char con el que se realizara la operacion XOR.
  * @param bytesMascara Numero de elementos a procesar de ambos arreglos.
  */
-    for (int i = 0; i < bytesMascara; semilla++, i++) {
-        *(arrayCopia + i) = *(arrayCopia + i) ^ *(arrayI_M + semilla);
+    if (semilla != 0){
+        for (int i = 0; i < nBytes; semilla++, i++) {
+            *(arrayCopia + i) = *(arrayCopia + i) ^ *(arrayI_M + semilla);
+        }
+    } else {
+        for (int i = 0; i < nBytes; i++) {
+            *(arrayImagen + i) = *(arrayImagen + i) ^ *(arrayI_M + i);
+        }
     }
+
 }

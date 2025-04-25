@@ -100,12 +100,12 @@ int main()
 
             //XOR entre imagenes
             if (not transformacionHallada) {
-                xorEntreImagenes(arrayCopia, semilla, arrayI_M, numBytesMascara);
+                xorEntreImagenes(nullptr, arrayCopia, semilla, arrayI_M, numBytesMascara);
                 sumarMascara(arrayCopia, arrayMascara, numBytesMascara);
                 transformacionHallada = comparar(arrayTexto, arrayCopia);
 
                 if (transformacionHallada) {
-                    xorImagenCompleta(arrayImagen, numBytesImagenes, arrayI_M);
+                    xorEntreImagenes(arrayImagen, nullptr, 0, arrayI_M, numBytesImagenes);
                     cout << "La transformacion aplicada es: XOR entre imagenes" << endl;
                 }
             }
@@ -121,7 +121,7 @@ int main()
                     if (transformacionHallada) {
                         cout << "La transformacion aplicada es: Rotacion a la izquierda de " << i
                              << " pixeles" << endl;
-                        rotacionDerechaImagen(arrayImagen, numBytesImagenes, i);
+                        rotacionDerecha(arrayImagen, 0, arrayCopia, numBytesImagenes, i);
                         break;
                     }
 
@@ -133,7 +133,7 @@ int main()
                     if (transformacionHallada) {
                         cout << "La transformacion aplicada es: Rotacion a la derecha de " << i
                              << " pixeles" << endl;
-                        rotacionIzquierdaImagen(arrayImagen, numBytesImagenes, i);
+                        rotacionIzquierda(arrayImagen, 0, arrayCopia, numBytesImagenes, i);
                         break;
                     }
                 }

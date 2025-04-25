@@ -11,27 +11,17 @@ bool exportImage(unsigned char* pixelData, int width,int height, QString archivo
 
 unsigned int* loadSeedMasking(const char* nombreArchivo, int &seed, int &n_pixels);
 
-void desplazamientoDerecha(unsigned char *array, int semilla, unsigned short int *arrayCopia, int bytesMascara, unsigned char numDesplazamiento);
+void desplazaminetoDerecha(unsigned char *arrayImagen = nullptr, int semilla = 0, unsigned short int *arrayCopia = nullptr, int nBytes = 0, unsigned char numDesplazamiento = 0);
 
-void desplazamientoIzquierda(unsigned char *array, int semilla, unsigned short int *arrayCopia, int bytesMascara, unsigned char numDesplazamiento);
+void desplazamientoIzquierda(unsigned char *arrayImagen = nullptr, int semilla = 0, unsigned short int *arrayCopia = nullptr, int nBytes = 0, unsigned char numDesplazamiento = 0);
 
-void rotacionDerecha(unsigned char *array, int semilla, unsigned short int *arrayCopia, int bytesMascara, unsigned char numRotacion);
+void rotacionDerecha(unsigned char *arrayImagen = nullptr, int semilla = 0, unsigned short int *arrayCopia = nullptr, int nBytes = 0, unsigned char numRotacion = 0);
 
-void rotacionIzquierda(unsigned char *array, int semilla, unsigned short int *arrayCopia, int bytesMascara, unsigned char numRotacion);
+void rotacionIzquierda(unsigned char *arrayImagen = nullptr, int semilla = 0, unsigned short int *arrayCopia = nullptr, int nBytes = 0, unsigned char numRotacion = 0);
 
-void xorEntreImagenes(unsigned short int *arrayCopia, int semilla, unsigned char *arrayI_M, int bytesMascara);
+void xorEntreImagenes(unsigned char* arrayImagen = nullptr, unsigned short int *arrayCopia = nullptr, int semilla = 0, unsigned char *arrayI_M = nullptr, int nBytes = 0);
 
 bool comparar(unsigned int *arrayTexto, unsigned short int *arrayCopia);
-
-void desplazamientoDerechaImagen(unsigned char *arrayImagen, int numBytesImagen, unsigned char numDesplazamiento);
-
-void desplazamientoIzquierdaImagen(unsigned char *arrayImagen, int numBytesImagen, unsigned char numDesplazamiento);
-
-void rotacionDerechaImagen(unsigned char *arrayImagen, int numBytesImagen, unsigned char numRotacionn);
-
-void rotacionIzquierdaImagen(unsigned char *arrayImagen, int numBytesImagen, unsigned char numRotacionn);
-
-void xorImagenCompleta(unsigned char *arrayImagen, int numBytesImagen, unsigned char *arrayI_M);
 
 void sumarMascara(unsigned short int *arrayCopia, unsigned char *arrayMascara, int numBytesMascara);
 
