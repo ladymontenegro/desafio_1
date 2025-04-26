@@ -4,7 +4,7 @@ using namespace std;
 
 //Funciones de transformaciones sobre la porcion del arreglo
 
-void desplazamientoDerecha(unsigned char *arrayImagen = nullptr, int semilla = 0, unsigned short int *arrayCopia = nullptr, int nBytes = 0, unsigned char numDesplazamiento = 0)
+void desplazamientoDerecha(unsigned char *arrayImagen, int semilla, unsigned short int *arrayCopia, int nBytes, unsigned char numDesplazamiento)
 {
     /*
  * @brief Realiza un desplazamiento a la derecha de los bits de una porcion de un arreglo.
@@ -31,7 +31,7 @@ void desplazamientoDerecha(unsigned char *arrayImagen = nullptr, int semilla = 0
     }
 }
 
-void desplazamientoIzquierda(unsigned char *arrayImagen = nullptr, int semilla = 0, unsigned short int *arrayCopia = nullptr, int nBytes = 0, unsigned char numDesplazamiento = 0)
+void desplazamientoIzquierda(unsigned char *arrayImagen, int semilla, unsigned short int *arrayCopia, int nBytes, unsigned char numDesplazamiento)
 {
     /*
  * @brief Realiza un desplazamiento a la izquierda de los bits de una porcion de un arreglo.
@@ -58,7 +58,7 @@ void desplazamientoIzquierda(unsigned char *arrayImagen = nullptr, int semilla =
     }
 }
 
-void rotacionDerecha(unsigned char *arrayImagen = nullptr, int semilla = 0, unsigned short int *arrayCopia = nullptr, int nBytes = 0, unsigned char numRotacion = 0)
+void rotacionDerecha(unsigned char *arrayImagen, int semilla, unsigned short int *arrayCopia, int nBytes, unsigned char numRotacion)
 {
     /*
  * @brief Realiza una rotacion a la derecha de los bits de una porcion de un arreglo.
@@ -93,7 +93,7 @@ void rotacionDerecha(unsigned char *arrayImagen = nullptr, int semilla = 0, unsi
 
 }
 
-void rotacionIzquierda(unsigned char *arrayImagen = nullptr, int semilla = 0, unsigned short int *arrayCopia = nullptr, int nBytes = 0, unsigned char numRotacion = 0)
+void rotacionIzquierda(unsigned char *arrayImagen, int semilla, unsigned short int *arrayCopia, int nBytes, unsigned char numRotacion)
 {
     /*
  * @brief Realiza una rotacion a la izquierda de los bits de una porcion de un arreglo.
@@ -127,7 +127,7 @@ void rotacionIzquierda(unsigned char *arrayImagen = nullptr, int semilla = 0, un
     }
 }
 
-void xorEntreImagenes(unsigned char* arrayImagen = nullptr, unsigned short int *arrayCopia = nullptr, int semilla = 0, unsigned char *arrayI_M = nullptr, int nBytes = 0)
+void xorEntreImagenes(unsigned char* arrayImagen, unsigned short int *arrayCopia, int semilla, unsigned char *arrayI_M, int nBytes)
 {
     /*
  * @brief Aplica una operacion XOR bit a bit entre una porcion de un arreglo y otra.

@@ -14,15 +14,15 @@ unsigned int* loadSeedMasking(const char* nombreArchivo, int &seed, int &n_pixel
 
 
 //Funciones transformaciones
-void desplazaminetoDerecha(unsigned char *arrayImagen = nullptr, int semilla = 0, unsigned short int *arrayCopia = nullptr, int nBytes = 0, unsigned char numDesplazamiento = 0);
+void desplazaminetoDerecha(unsigned char *arrayImagen, int semilla, unsigned short int *arrayCopia, int nBytes, unsigned char numDesplazamiento);
 
-void desplazamientoIzquierda(unsigned char *arrayImagen = nullptr, int semilla = 0, unsigned short int *arrayCopia = nullptr, int nBytes = 0, unsigned char numDesplazamiento = 0);
+void desplazamientoIzquierda(unsigned char *arrayImagen, int semilla, unsigned short int *arrayCopia, int nBytes, unsigned char numDesplazamiento);
 
-void rotacionDerecha(unsigned char *arrayImagen = nullptr, int semilla = 0, unsigned short int *arrayCopia = nullptr, int nBytes = 0, unsigned char numRotacion = 0);
+void rotacionDerecha(unsigned char *arrayImagen, int semilla, unsigned short int *arrayCopia, int nBytes, unsigned char numRotacion);
 
-void rotacionIzquierda(unsigned char *arrayImagen = nullptr, int semilla = 0, unsigned short int *arrayCopia = nullptr, int nBytes = 0, unsigned char numRotacion = 0);
+void rotacionIzquierda(unsigned char *arrayImagen, int semilla, unsigned short int *arrayCopia, int nBytes, unsigned char numRotacion);
 
-void xorEntreImagenes(unsigned char* arrayImagen = nullptr, unsigned short int *arrayCopia = nullptr, int semilla = 0, unsigned char *arrayI_M = nullptr, int nBytes = 0);
+void xorEntreImagenes(unsigned char* arrayImagen, unsigned short int *arrayCopia, int semilla, unsigned char *arrayI_M, int nBytes);
 
 
 //Funciones comparar
